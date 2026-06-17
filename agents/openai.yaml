@@ -1,0 +1,4 @@
+interface:
+  display_name: "Xiaoyunque Video"
+  short_description: "Plan Xiaoyunque Seedance video jobs"
+  default_prompt: "Use $xiaoyunque-video to prepare a Xiaoyunque video generation job from my storyboard and references."
