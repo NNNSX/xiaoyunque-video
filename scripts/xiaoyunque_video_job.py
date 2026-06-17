@@ -233,10 +233,10 @@ def create(args: argparse.Namespace) -> None:
             [
                 "# Xiaoyunque Web Submission Notes",
                 "",
-                "Preferred route: official Xiaoyunque CLI via absolute path `$HOME/.npm-global/bin/pippit-tool-cli`.",
+                "Preferred route: official Xiaoyunque CLI via a platform-specific absolute `pippit-tool-cli` path. On macOS/Linux, `$HOME/.npm-global/bin/pippit-tool-cli` is the common default. On Windows, locate it with PowerShell `Get-Command pippit-tool-cli` or `npm prefix -g`.",
                 "",
                 "1. Verify `XYQ_ACCESS_KEY` is exported locally; do not print it. If this is first use and Codex cannot see it, type `/quit`, export the key in the same terminal, then reopen/resume Codex from that terminal. `XIAOYUNQUE_API_KEY` is only a compatibility fallback.",
-                "2. Verify `$HOME/.npm-global/bin/pippit-tool-cli -h` works, installing with `npx @pippit-dev/cli@latest install` only after approval.",
+                "2. Verify the platform-specific absolute `pippit-tool-cli -h` path works, installing with `npx @pippit-dev/cli@latest install` only after approval.",
                 f"3. Model: {args.model}",
                 f"4. Mode/type: {args.mode}",
                 f"5. Aspect ratio: {args.aspect_ratio}",
@@ -245,8 +245,8 @@ def create(args: argparse.Namespace) -> None:
                 "8. Upload/pass references according to `job.json` order and roles. For repeated `--image`, the first path is `Image 1`, the second is `Image 2`; keep prompt numbering and CLI order identical.",
                 "9. Do not rely on filenames for model binding; semantic filenames are only human safeguards.",
                 "10. Before any paid submission, verify the user explicitly confirmed this exact model/duration/reference set.",
-                "11. Run `$HOME/.npm-global/bin/pippit-tool-cli generate-video ...` and record returned `thread_id` and `run_id` in `job.json` or run notes.",
-                "12. Prefer `python3 skills/xiaoyunque-video/scripts/xiaoyunque_video_job.py wait-result ...`; it queries `$HOME/.npm-global/bin/pippit-tool-cli query-result` with a 10-minute default wait and 60-second interval.",
+                "11. Run the absolute `pippit-tool-cli generate-video ...` path and record returned `thread_id` and `run_id` in `job.json` or run notes.",
+                "12. Prefer `python3 skills/xiaoyunque-video/scripts/xiaoyunque_video_job.py wait-result ...`; pass `--cli <absolute_cli_path>` on systems where the macOS/Linux default is not valid. It queries `pippit-tool-cli query-result` with a 10-minute default wait and 60-second interval.",
                 "13. Complete `review.md` before reporting success.",
                 "",
             ]
