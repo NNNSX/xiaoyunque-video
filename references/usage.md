@@ -12,19 +12,35 @@ Install when `pippit-tool-cli` is missing:
 npx @pippit-dev/cli@latest install
 ```
 
-Inspect available commands with the absolute path:
+Inspect available commands with an absolute path.
+
+macOS/Linux common path:
 
 ```bash
 $HOME/.npm-global/bin/pippit-tool-cli -h
 ```
 
-Use this absolute path for normal skill calls:
+macOS/Linux path discovery when the common path is missing:
+
+```bash
+npm prefix -g
+command -v pippit-tool-cli
+```
+
+Windows PowerShell path discovery:
+
+```powershell
+npm prefix -g
+Get-Command pippit-tool-cli
+```
+
+Use the discovered absolute path for normal skill calls. On macOS/Linux this is commonly:
 
 ```bash
 $HOME/.npm-global/bin/pippit-tool-cli
 ```
 
-Do not rely on `PATH` for automated skill execution; absolute paths make Codex sessions and worker sessions behave consistently.
+On Windows, use the full path returned by PowerShell. Do not rely on `PATH` for automated skill execution; absolute paths make Codex sessions and worker sessions behave consistently.
 
 The CLI maintains local files under `~/.pippit_tool_cli/`, including daily logs at:
 
@@ -40,6 +56,12 @@ Use the official local environment variable:
 
 ```bash
 export XYQ_ACCESS_KEY="..."
+```
+
+Windows PowerShell:
+
+```powershell
+$env:XYQ_ACCESS_KEY="..."
 ```
 
 For first-time setup in Codex, tell the user to type `/quit`, return to the same terminal, run the export command above, then reopen or resume Codex from that terminal. Environment variables exported after Codex is already running are usually not visible to the existing Codex process.
