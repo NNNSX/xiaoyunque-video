@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+*.py[cod]
+*.log
+*.tmp
+*.secret
+.env
+.env.*
+outputs/
+output/
+*.mp4
+*.mov
+*.webm
+job.json
+submit_notes.local.md
