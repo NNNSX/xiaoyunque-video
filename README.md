@@ -20,16 +20,31 @@
 npx @pippit-dev/cli@latest install
 ```
 
-真实生成默认使用绝对路径，不依赖 `PATH`：
+真实生成优先使用绝对路径，不依赖 `PATH`。macOS/Linux 常见路径：
 
 ```bash
 $HOME/.npm-global/bin/pippit-tool-cli
 ```
 
+Windows 需按实际 npm 全局安装目录定位，常见 PowerShell 检查方式：
+
+```powershell
+npm prefix -g
+Get-Command pippit-tool-cli
+```
+
+如果当前系统的 CLI 不在上述 macOS/Linux 路径，使用 `references/usage.md` 的跨平台定位方法，并在 helper 的 `--cli` 参数里传入实际绝对路径。
+
 设置 key 时只在本地终端声明环境变量：
 
 ```bash
 export XYQ_ACCESS_KEY="..."
+```
+
+Windows PowerShell：
+
+```powershell
+$env:XYQ_ACCESS_KEY="..."
 ```
 
 如果已经进入 Codex 会话后才设置 key，当前 Codex 进程通常看不到新环境变量。首次正式使用时建议：
@@ -124,7 +139,7 @@ python3 skills/xiaoyunque-video/scripts/xiaoyunque_video_job.py wait-result \
 ## 关键规则
 
 - 官方 CLI 必须安装；缺少 CLI 时只准备任务包，不编造 API。
-- 使用 `$HOME/.npm-global/bin/pippit-tool-cli` 绝对路径。
+- 使用当前系统可用的 `pippit-tool-cli` 绝对路径；macOS/Linux 常见为 `$HOME/.npm-global/bin/pippit-tool-cli`，Windows 需按 `npm prefix -g` 或 `Get-Command pippit-tool-cli` 定位。
 - 提交真实生成前必须确认本次模型、时长、比例、参考素材和费用风险。
 - 多参考图按传入顺序绑定：第一条 `--image` 是 `Image 1 / 第一张参考图`，第二条是 `Image 2 / 第二张参考图`；不要依赖文件名作为模型绑定依据。
 - 参考图、视频、音频的角色要写清楚：起始帧、结束帧、主体身份、风格、镜头运动、音频等。
