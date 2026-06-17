@@ -9,7 +9,7 @@ Use this skill for Xiaoyunque / Pippit video generation work, especially Seedanc
 
 ## Core Rules
 
-- Prefer the official Xiaoyunque CLI route from the local guide: install with `npx @pippit-dev/cli@latest install`, then call the executable by absolute path. Default to `$HOME/.npm-global/bin/pippit-tool-cli` for `generate-video`, `query-result`, and CLI help so the skill does not depend on shell `PATH`.
+- Prefer the official Xiaoyunque CLI route from the local guide: install with `npx @pippit-dev/cli@latest install`, then call the executable by absolute path so the skill does not depend on shell `PATH`. On macOS/Linux, default to `$HOME/.npm-global/bin/pippit-tool-cli` when present. On Windows, locate the installed command with PowerShell `Get-Command pippit-tool-cli` or `npm prefix -g`, then use that absolute path in commands and helper `--cli` arguments.
 - Treat the official CLI as required for real generation. If `pippit-tool-cli` is missing, stop after prompt/job-package preparation and strongly recommend installing it; do not fall back to an invented API or unofficial provider.
 - Prefer the locally exported `XYQ_ACCESS_KEY` for CLI/API-backed workflows. On first use, if the key is not visible inside Codex, tell the user to type `/quit`, return to the same terminal, run `export XYQ_ACCESS_KEY="..."`, then reopen/resume Codex from that terminal before formal video generation. Accept `XIAOYUNQUE_API_KEY` only as a compatibility fallback that the helper may map to `XYQ_ACCESS_KEY` for the CLI process. Never ask the user to paste the key into chat, prompts, job files, or command arguments. If the CLI installer requires interactive secret entry, ask the user to paste it into the installer prompt, not into project files.
 - Use the Xiaoyunque website for login, key creation, and fallback manual generation; do not treat browser bundles as API documentation.
@@ -50,7 +50,7 @@ python3 <skill_dir>/scripts/xiaoyunque_video_job.py doctor
 ```
 
 If neither `XYQ_ACCESS_KEY` nor compatibility fallback `XIAOYUNQUE_API_KEY` is visible, stop and ask the user to export `XYQ_ACCESS_KEY` locally. Do not accept the key in chat.
-4. **Verify the official CLI for real generation.** Run `$HOME/.npm-global/bin/pippit-tool-cli -h`. If missing, install with `npx @pippit-dev/cli@latest install` after user approval, then use the absolute CLI path.
+4. **Verify the official CLI for real generation.** Run the platform-specific absolute `pippit-tool-cli -h` path. On macOS/Linux, try `$HOME/.npm-global/bin/pippit-tool-cli -h` first. On Windows, locate it with `Get-Command pippit-tool-cli` or `npm prefix -g`. If missing, install with `npx @pippit-dev/cli@latest install` after user approval, then use the absolute CLI path.
 5. **Choose the route.**
    - Official CLI generation: default route for real Xiaoyunque work.
    - Job package only: use when the user wants prompts/files prepared for later manual submission.
@@ -74,7 +74,7 @@ python3 <skill_dir>/scripts/xiaoyunque_video_job.py create \
 
 Use `--cost-confirmation user-confirmed` only when the user has explicitly approved the exact paid run. Otherwise keep `not-confirmed` and stop before provider submission.
 
-11. **Submit only if authorized and isolated.** In chief-worker projects, delegate real `generate-video` submission to a disposable worker. Use `$HOME/.npm-global/bin/pippit-tool-cli generate-video` only after confirmation. Capture `thread_id` and `run_id`.
+11. **Submit only if authorized and isolated.** In chief-worker projects, delegate real `generate-video` submission to a disposable worker. Use the platform-specific absolute `pippit-tool-cli generate-video` path only after confirmation. Capture `thread_id` and `run_id`.
 12. **Wait in one programmatic loop.** Do not manually ask for confirmation before each status check. Use the helper's async wait loop, defaulting to 10 minutes and one check per minute:
 
 ```bash
@@ -93,7 +93,7 @@ The command exits when completed and downloaded, fails on provider error, or tim
 
 - `auth-blocked`: Xiaoyunque requires login or membership; stop and ask the user to log in or provide accessible docs.
 - `docs-blocked`: the user-provided Lark document is inaccessible; use public-source workflow and list missing API facts.
-- `cli-missing`: `$HOME/.npm-global/bin/pippit-tool-cli` is not installed; real generation is blocked until installing with `npx @pippit-dev/cli@latest install` after user approval.
+- `cli-missing`: no platform-specific absolute `pippit-tool-cli` path is available; real generation is blocked until installing with `npx @pippit-dev/cli@latest install` after user approval and locating the installed executable.
 - `key-missing`: `XYQ_ACCESS_KEY` is not visible to the current process; tell the user to `/quit`, export it in the same terminal, reopen/resume Codex, and retry `doctor`. `XIAOYUNQUE_API_KEY` is only a compatibility fallback for older local setup.
 - `cost-unconfirmed`: a real provider call would consume credits but the exact run was not explicitly confirmed; stop before submission.
 - `provider-pending`: web job has not finished; report the job URL/status and continue only when asked.
