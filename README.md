@@ -47,6 +47,26 @@ python3 skills/xiaoyunque-video/scripts/xiaoyunque_video_job.py doctor
 
 `XIAOYUNQUE_API_KEY` 只作为旧本地配置兼容 fallback；正式使用优先设置 `XYQ_ACCESS_KEY`。
 
+## 模型与参数速查
+
+以当前 CLI 帮助和已整理资料为准，详细规则见 `references/usage.md`。
+
+| 用途 | 推荐值 |
+| --- | --- |
+| 普通默认 / 成本速度平衡 | `seedance2.0_fast_direct`、`720p`、`5s` |
+| 质量优先 | `seedance2.0_direct`，必要时再试账号支持的 VIP 模型 |
+| 1080p | 仅推荐 `seedance2.0_vision`，并先确认账号支持 |
+| 横版分镜 / 电影感预览 | `16:9` |
+| 竖屏社媒 | `9:16` |
+| 产品细节 / 人物半身 | `3:4` 或 `4:3` |
+
+已知 CLI 模型 ID：
+
+- 普通用户：`seedance2.0_direct`、`seedance2.0_fast_direct`
+- VIP 用户：`seedance2.0_direct`、`seedance2.0_fast_direct`、`seedance2.0_vision`、`seedance2.0_fast_vision`
+
+当前 CLI 帮助列出的画幅包括 `9:16`、`16:9`、`3:4`、`4:3`；分辨率包括 `720p`、`1080p`。公开示例中出现的 `1:1` 需按当前账号和 CLI 版本实测确认。
+
 ## 最小工作流
 
 1. 创建或读取项目视频记忆：
